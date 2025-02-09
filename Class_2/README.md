@@ -1,34 +1,42 @@
 <ul>
-<li>Write a python program to find the factorial of a number using for loop.</li>
+<li>Given a list of numbers, remove duplicates and sort in ascending order</li>
 <b>Output: </b><br>
-<img src="outputs\Fact_output_!.png"/>
-<!-- ![screenshot](output/fa.png) -->
+<img src="outputs/list.png"/>
 
-<li>Write a python program to find the largest number between two numbers using function.</li>
-<b>Output: </b><br>
-<img src="outputs/largest_number.png"/>
 
-<li>Write a python program to find the second highest number from a set Of numbers.</li>
+<li>Find the common elements between two lists using sets.</li>
 <b>Output: </b><br>
-<img src="outputs/2nd hightest.png"/>
+<img src="outputs/set.png"/>
 
-<li>Write a python program to find the smallest number from a set Of numbers.</li>
+<li> Create a tuple of student records (name, age, grade) and sort by grade.</li>
 <b>Output: </b><br>
-<img src="outputs/smallest_number.png"/>
+<img src="outputs/tuple.png"/>
 
-<li>Write a python program to find the sum of all numbers between 50 and 100, which are divisible by 3 and not divisible by 5.</li>
+<li>Count word occurrences in a given text and store them in a dictionary.</li>
 <b>Output: </b><br>
-<img src="outputs/50_to_100_sum.png"/>
+<img src="outputs/dictionary.png"/>
 
-<li>Write a python program to find the sum Of Odd and even numbers from a set Of numbers.</li>
+<li>Generate a 5x5 matrix of random integers and compute row-wise sums.</li>
 <b>Output: </b><br>
-<img src="outputs/even_odd_sum.png"/>
+<img src="outputs/matrix.png"/>
 
-<li>Write a python program to find the sum of the numbers passed as parameters.</li>
+<li>Create an array of 100 random values and normalize them between 0 and 1.</li>
 <b>Output: </b><br>
-<img src="outputs/function_sum.png"/>
+<img src="outputs/normalize.png"/>
 
-<li>Write a python program to generate Fibonacci series.</li>
+<li>Load a CSV file of sales data and compute total revenue per product.</li>
 <b>Output: </b><br>
-<img src="outputs/fibonacci.png"/>
+<img src="outputs/compute total revenue.png"/>
+
+<li>Fill missing values in a dataset with column-wise means.</li>
+<b>Output: </b><br>
+<img src="outputs/column-wise means.png"/>
+
+<li>Plot a line graph showing temperature variations over a week.</li>
+<b>Output: </b><br>
+<img src="outputs/line_graph.png"/>
+<li>Create a bar chart comparing sales revenue across different regions.</li>
+<b>Output: </b><br>
+<img src="outputs/bar_chart.png"/>
+ 
 </ul>
