@@ -19,36 +19,62 @@ class DFS:
         self.goal_level = 999999
         self.state = 0
 
-    def init(self):
-        N = int(input("Enter the N value:"))
-        # graph = [
-        #     [0, 0, 1, 0, 1],
-        #     [0, 1, 1, 1, 1],
-        #     [0, 1, 0, 0, 1],
-        #     [1, 1, 0, 1, 1],
-        #     [1, 0, 0, 0, 1]
-        # ]
-        graph = ny.random.randint(0,2,(N,N))
-        print("The graph :",graph)
-        self.N = len(graph)
+    def init(self):   #-------
+        while True:
+            #N = int(input("Enter the N value:"))
+            N = ny.random.randint(4,8)
+            print("The Grid size : ",N)
+            # graph = [
+            #     [0, 0, 1, 0, 1],
+            #     [0, 1, 1, 1, 1],
+            #     [0, 1, 0, 0, 1],
+            #     [1, 1, 0, 1, 1],
+            #     [1, 0, 0, 0, 1]
+            # ]
+            graph = ny.random.randint(0,2,(N,N))
+            print("The graph :",graph)
+            self.N = len(graph)
 
-        source_x = int(input("enter source x"))
-        source_y = int(input("enter source y"))
-        # source_x = 0
-        # source_y = 2
-        goal_x = int(input("goal x"))
-        goal_y = int(input("goal y"))
-        # goal_x = 4
-        # goal_y = 4
-        self.source = Node(source_x, source_y, 0)
-        self.goal = Node(goal_x, goal_y, self.goal_level)
-        self.st_dfs(graph, self.source)
+            source_x = ny.random.randint(0,N)
+            print("random source x",source_x)
+        
+            source_y = ny.random.randint(0,N)
+            print("random source y",source_y)
+            # source_x = 0
+            # source_y = 2
 
-        if self.found:
-            print("Goal found")
-            print("Number of moves required =", self.goal.depth)
-        else:
-            print("Goal cannot be reached from the starting block")
+            if graph[source_x][source_y] == 0:
+                print("source is invalided")
+                #return 0
+                print("Again new Grid generate")
+                continue
+           
+            
+            goal_x = ny.random.randint(0,N)
+            print("random goal x",goal_x)
+            goal_y = ny.random.randint(0,N)
+            print("random goal y",goal_y)
+
+            if graph[goal_x][goal_y] == 0:
+                print("goal is invalided")
+                print("Again new Grid generate")
+                print()
+                continue
+                
+                #return 0
+            # goal_x = 4
+            # goal_y = 4
+            
+            self.source = Node(source_x, source_y, 0)
+            self.goal = Node(goal_x, goal_y, self.goal_level)
+            self.st_dfs(graph, self.source)
+
+            if self.found:
+                print("Goal found")
+                print("Number of moves required =", self.goal.depth)
+                return 0
+            else:
+                print("Goal cannot be reached from the starting block")
 
     def print_direction(self, m, x, y):
         if m == 0:
