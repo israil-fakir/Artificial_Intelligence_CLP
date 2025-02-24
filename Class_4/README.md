@@ -19,7 +19,7 @@
 <br>
 
 <b>Output: </b><br>
-<img src="output\output.png"/>
+<img src="output\output_1.png"/>
 
 <br>
 
