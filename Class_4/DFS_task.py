@@ -110,7 +110,7 @@ class DFS:
                 if self.found:
                     return
         
-        self.topo_order.append((u.x, u.y))  # Add node to topological order
+        self.topo_order.append((u.x, u.y))   #add topology
     
 def main():
     d = DFS()
