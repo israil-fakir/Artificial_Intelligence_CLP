@@ -13,7 +13,7 @@
 <img src="output\2nd_input.png"/>
 <br>
 <b>Output: </b><br>
-<img src="output\12ndst.png"/>
+<img src="output\2nd.png"/>
  
 
 </ul>
