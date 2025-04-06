@@ -1,5 +1,5 @@
 animal = open("animal.txt", "a+")
-# r = read
+# r = read 
 # w = write
 # r+ = read/ write
 # w+ = read/ write truncate
