@@ -1,3 +1,5 @@
+file_val = open("lab_report_03_input_data.txt", "r+")
+
 def is_safe(node, color, assignment, graph):
     for neighbor in graph[node]:
         if assignment[neighbor] == color:
@@ -13,20 +15,16 @@ def graph_coloring(node, assignment, graph, K, N):
             assignment[node] = color
             if graph_coloring(node + 1, assignment, graph, K, N):
                 return True
-            assignment[node] = 0  # Backtrack
+            assignment[node] = 0   
     return False
 
 def solve_graph_coloring():
-    # Read input values separately
-    N = int(input("Enter number of vertices (N): "))
-    M = int(input("Enter number of edges (M): "))
-    K = int(input("Enter number of colors (K): "))
-
-    # Build the graph
+    first_line = file_val.readline().strip() #n,m,k separate
+    N, M, K = map(int, first_line.split())
+ 
     graph = [[] for _ in range(N)]
-    print(f"Enter {M} edges (u v):")
     for _ in range(M):
-        u, v = map(int, input().split())
+        u, v = map(int, file_val.readline().strip().split())
         graph[u].append(v)
         graph[v].append(u)
 
@@ -37,6 +35,7 @@ def solve_graph_coloring():
     else:
         print(f"\nColoring Not Possible with {K} Colors")
 
-# Run the function
+ 
 if __name__ == "__main__":
     solve_graph_coloring()
+    file_val.close() 
