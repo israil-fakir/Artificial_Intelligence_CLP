@@ -1,4 +1,4 @@
-# a = int(input("enter a number :"))
+# a = int(input("enter a number :")) 
 # b = int(input("enter another number :"))
 
 input_number = open("add_two_number_file.txt","r+")
