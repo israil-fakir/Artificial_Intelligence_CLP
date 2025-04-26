@@ -10,7 +10,7 @@ class KMeans:
     def __init__(self, num_points=100, num_clusters=10):
         self.num_points = num_points
         self.num_clusters = num_clusters
-        self.grid_size = 40
+        self.grid_size = 25
         self.points = [Point(random.randint(0, self.grid_size-1), random.randint(0, self.grid_size-1)) for _ in range(num_points)]
         self.centroids = [Point(random.randint(0, self.grid_size-1), random.randint(0, self.grid_size-1)) for _ in range(num_clusters)]
 
