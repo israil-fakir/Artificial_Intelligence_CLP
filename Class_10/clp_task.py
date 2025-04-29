@@ -1,16 +1,24 @@
 import random
 
+
+def get_fitness(ind):
+    return ind.fitness
+
+def get_fitness_index(i, individuals):
+    return individuals[i].fitness
+
+ 
 class Individual:
     def __init__(self, k, T):
-        self.k, self.T = k, T
-        # first two genes random 0–9, rest fixed 0
+        self.k = k
+        self.T = T
         ft = [random.randint(0, 9) for _ in range(min(2, k))]
         self.genes = ft + [0] * (k - len(ft))
         self.fitness = self.calc_fitness()
 
     def calc_fitness(self):
-        # maximum diff between (g0+g1) and T is 18 → map to [0..18]
-        return 18 - abs((self.genes[0] + self.genes[1]) - self.T)
+        return 18 - abs((self.genes[0] + self.genes[1]) - self.T) # max 18,min 0 
+    
 
 class Population:
     def __init__(self, size, k, T):
@@ -22,13 +30,16 @@ class Population:
             ind.fitness = ind.calc_fitness()
 
     def get_fittest(self):
-        return max(self.individuals, key=lambda ind: ind.fitness)
+        return max(self.individuals, key=get_fitness)
 
     def get_second_fittest(self):
-        return sorted(self.individuals, key=lambda ind: ind.fitness, reverse=True)[1]
+        sorted_inds = sorted(self.individuals, key=get_fitness, reverse=True)
+        return sorted_inds[1]
 
     def get_least_fittest_index(self):
-        return min(range(self.size), key=lambda i: self.individuals[i].fitness)
+        return min(range(self.size),
+                   key=lambda i: get_fitness_index(i, self.individuals))
+
 
 class GeneticAlgorithm:
     def __init__(self, T, k, pop_size=30, crossover_rate=0.8, mutation_rate=0.2):
@@ -39,17 +50,15 @@ class GeneticAlgorithm:
 
     def selection(self):
         a, b = random.sample(self.pop.individuals, 2)
-        return (a if a.fitness >= b.fitness else b,
-                b if b.fitness > a.fitness else a)
+        return (a if get_fitness(a) >= get_fitness(b) else b,
+                b if get_fitness(b) > get_fitness(a) else a)
 
     def crossover(self, p1, p2):
         if random.random() < self.cr and self.k > 1:
-            # one-point crossover on the first two genes only
             pt = 1
             p1.genes[:pt], p2.genes[:pt] = p2.genes[:pt], p1.genes[:pt]
 
     def mutate(self, ind):
-        # mutate only gene[0] or gene[1]
         for i in range(min(2, self.k)):
             if random.random() < self.mr:
                 ind.genes[i] = random.randint(0, 9)
@@ -58,16 +67,13 @@ class GeneticAlgorithm:
         self.pop.calculate_fitness()
         while self.generation < max_gens:
             best = self.pop.get_fittest()
-            # perfect if fitness==18 ⇒ g0+g1 == T
             if best.fitness == 18:
                 break
 
-            # elitism: keep top 2
-            new_inds = sorted(self.pop.individuals,
-                              key=lambda ind: ind.fitness,
-                              reverse=True)[:2]
+            
+            sorted_inds = sorted(self.pop.individuals, key=get_fitness, reverse=True)
+            new_inds = sorted_inds[:2]
 
-            # fill rest of population
             while len(new_inds) < self.pop.size:
                 p1, p2 = self.selection()
                 c1 = Individual(self.k, self.T); c1.genes = p1.genes[:]
@@ -84,12 +90,12 @@ class GeneticAlgorithm:
 
         return self.pop.get_fittest()
 
+ 
 def main():
     T = int(input("T = "))
     k = int(input("k = "))
     ga = GeneticAlgorithm(T, k)
     sol = ga.evolve()
-    # print the k‐length list
     print("Output:")
     print(" ".join(str(x) for x in sol.genes))
 
