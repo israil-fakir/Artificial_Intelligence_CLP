@@ -1,84 +1,89 @@
 import random
 
 class Individual:
-    def __init__(self):
-        self.gene_length = 5
-        self.genes = [random.randint(0, 1) for _ in range(self.gene_length)]
+    def __init__(self, n):
+        self.n = n
+        self.genes = [random.randint(0, n - 1) for _ in range(n)]
         self.fitness = self.calc_fitness()
 
     def calc_fitness(self):
-        return sum(self.genes)
+        non_attacking = 0
+        for i in range(self.n):
+            for j in range(i + 1, self.n):
+                if self.genes[i] != self.genes[j] and abs(self.genes[i] - self.genes[j]) != abs(i - j):
+                    non_attacking += 1
+        return non_attacking
+
+    def mutate(self):
+        idx1, idx2 = random.sample(range(self.n), 2)
+        self.genes[idx1], self.genes[idx2] = self.genes[idx2], self.genes[idx1]
+
 
 class Population:
-    def __init__(self, size):
+    def __init__(self, size, n):
+        self.n = n
+        self.individuals = [Individual(n) for _ in range(size)]
         self.size = size
-        self.individuals = [Individual() for _ in range(size)]
+        self.max_fitness = (n * (n - 1)) // 2
         self.fittest = self.get_fittest()
 
     def get_fittest(self):
         return max(self.individuals, key=lambda ind: ind.fitness)
 
-    def get_second_fittest(self):
+    def select_parents(self):
         sorted_individuals = sorted(self.individuals, key=lambda ind: ind.fitness, reverse=True)
-        return sorted_individuals[1]
+        return sorted_individuals[0], sorted_individuals[1]
 
-    def get_least_fittest_index(self):
-        return min(range(self.size), key=lambda i: self.individuals[i].fitness)
+    def evolve(self):
+        parent1, parent2 = self.select_parents()
+        crossover_point = random.randint(1, self.n - 2)
 
-    def calculate_fitness(self):
-        for individual in self.individuals:
-            individual.fitness = individual.calc_fitness()
+        child_genes = parent1.genes[:crossover_point] + parent2.genes[crossover_point:]
+        child = Individual(self.n)
+        child.genes = child_genes
+        child.fitness = child.calc_fitness()
+
+        if random.random() < 0.3:
+            child.mutate()
+            child.fitness = child.calc_fitness()
+
+        least_fit = min(self.individuals, key=lambda ind: ind.fitness)
+        self.individuals[self.individuals.index(least_fit)] = child
         self.fittest = self.get_fittest()
 
-class GeneticAlgorithm:
-    def __init__(self, pop_size=10):
-        self.population = Population(pop_size)
-        self.fittest = None
-        self.second_fittest = None
-        self.generation_count = 0
 
-    def selection(self):
-        self.fittest = self.population.get_fittest()
-        self.second_fittest = self.population.get_second_fittest()
+def print_board(genes):
+    n = len(genes)
+    print("\nFinal Board (1 = Queen, 0 = Empty):")
+    for row in range(n):
+        line = ['0'] * n
+        line[genes[row]] = '1'
+        print(' '.join(line))
 
-    def crossover(self):
-        crossover_point = random.randint(0, self.fittest.gene_length - 1)
-        for i in range(crossover_point):
-            self.fittest.genes[i], self.second_fittest.genes[i] = \
-                self.second_fittest.genes[i], self.fittest.genes[i]
 
-    def mutation(self):
-        for individual in [self.fittest, self.second_fittest]:
-            mutation_point = random.randint(0, individual.gene_length - 1)
-            individual.genes[mutation_point] = 1 - individual.genes[mutation_point]
+def solve_n_queens(n, population_size=100, max_generations=1000):
+    pop = Population(population_size, n)
+    generation = 0
 
-    def get_fittest_offspring(self):
-        return self.fittest if self.fittest.fitness > self.second_fittest.fitness else self.second_fittest
+    print(f"Target fitness: {(n * (n - 1)) // 2}")
 
-    def add_fittest_offspring(self):
-        self.fittest.fitness = self.fittest.calc_fitness()
-        self.second_fittest.fitness = self.second_fittest.calc_fitness()
-        index = self.population.get_least_fittest_index()
-        self.population.individuals[index] = self.get_fittest_offspring()
+    while pop.fittest.fitness < pop.max_fitness and generation < max_generations:
+        generation += 1
+        pop.evolve()
+        print(f"Generation {generation}: Fitness = {pop.fittest.fitness}")
 
-    def run(self):
-        self.population.calculate_fitness()
-        print(f"Generation: {self.generation_count} Fittest: {self.population.fittest.fitness}")
+    if pop.fittest.fitness == pop.max_fitness:
+        print("\n✅ Solution found!")
+    else:
+        print("\n⚠️ Max generations reached. Best solution:")
 
-        while self.population.fittest.fitness < 5:
-            self.generation_count += 1
-            self.selection()
-            self.crossover()
-            if random.randint(0, 6) < 5:
-                self.mutation()
-            self.add_fittest_offspring()
-            self.population.calculate_fitness()
-            print(f"Generation: {self.generation_count} Fittest: {self.population.fittest.fitness}")
+    print(f"Generation: {generation}")
+    print("Genes (queen positions):", pop.fittest.genes)
+    print_board(pop.fittest.genes)
+    return pop.fittest.genes
 
-        print(f"\nSolution found in generation {self.generation_count}")
-        print(f"Fitness: {self.population.fittest.fitness}")
-        print("Genes:", ''.join(map(str, self.population.fittest.genes)))
 
-# Run the genetic algorithm
-ga = GeneticAlgorithm()
-ga.run()
+# Run the algorithm
+if __name__ == "__main__":
+    n = 8  # You can change to any value >= 4
+    solve_n_queens(n)
