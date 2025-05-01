@@ -28,5 +28,11 @@ print(x)
 print(y)
 print(z)
 
+fruits = ["mango", "apple","cherry"]
+p, q, r = fruits
+print(p, q, r)
+
+
+print(p+q+r)
 
 
