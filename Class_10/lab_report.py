@@ -61,7 +61,7 @@ def print_board(genes):
         print(' '.join(line))
 
 
-def solve_n_queens(n, population_size=100, max_generations=1000):
+def solve_n_queens(n, population_size, max_generations):
     pop = Population(population_size, n)
     generation = 0
 
@@ -85,5 +85,11 @@ def solve_n_queens(n, population_size=100, max_generations=1000):
 
 # Run the algorithm
 if __name__ == "__main__":
-    n = 8  # You can change to any value >= 4
-    solve_n_queens(n)
+    n = int(input("Enter the queen number: "))
+    population_size = int(input("Enter the population size:"))
+    max_generations = int(input("Enter the max_generations"))
+    # n = 3  # You can change to any value >= 4
+    solve_n_queens(n, population_size,max_generations)
+
+  
+        
