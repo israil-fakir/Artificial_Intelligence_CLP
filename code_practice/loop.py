@@ -25,5 +25,15 @@ print("the fruits :")
 for i in fruits:
     print(i, end=" ")
 
+for i in range(0, len(fruits)):
+    print(i, end="  ")
 
-for i 
+print("\n")
+for i  in "orange":
+    print(i)
+
+
+
+# for i in "hello":
+#     print(i, end="  ")
+
