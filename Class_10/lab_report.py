@@ -54,7 +54,7 @@ class Population:
 
 def print_board(genes):
     n = len(genes)
-    print("\nFinal Board (1 = Queen, 0 = Empty):")
+    print("1 = quee and 0 = empty)")
     for row in range(n):
         line = ['0'] * n
         line[genes[row]] = '1'
@@ -73,22 +73,19 @@ def solve_n_queens(n, population_size, max_generations):
         print(f"Generation {generation}: Fitness = {pop.fittest.fitness}")
 
     if pop.fittest.fitness == pop.max_fitness:
-        print("\n✅ Solution found!")
+        print("Solution found!")
     else:
-        print("\n⚠️ Max generations reached. Best solution:")
+        print("Max generations reached. Best solution:")
 
-    print(f"Generation: {generation}")
-    print("Genes (queen positions):", pop.fittest.genes)
+    print(f"Generation: {generation}")    
     print_board(pop.fittest.genes)
     return pop.fittest.genes
 
-
-# Run the algorithm
+ 
 if __name__ == "__main__":
     n = int(input("Enter the queen number: "))
-    population_size = int(input("Enter the population size:"))
-    max_generations = int(input("Enter the max_generations"))
-    # n = 3  # You can change to any value >= 4
+    population_size = int(input("Enter the population size: "))
+    max_generations = int(input("Enter the max_generations number: ")) 
     solve_n_queens(n, population_size,max_generations)
 
   
