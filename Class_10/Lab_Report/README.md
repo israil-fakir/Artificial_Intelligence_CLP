@@ -3,10 +3,10 @@
  <b>Here sample input and output</b>
 
  <br>
- 
-<b>Test Case 01: </b>
  <br>
-<b>Input and Output:</b>
+ 
+<b>Test Case 01: </b><br> 
+<b>Input and Output:</b><br>
 <img src="output\2nd_input_output.png"/>
 
 <br><br>
