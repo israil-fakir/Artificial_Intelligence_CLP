@@ -16,6 +16,7 @@
 <img src="output\1st_input.png"/>
 <br><br>
 <b>Output:</b>
+<br>
 <img src="output\1st_output.png"/>
 
 <br><br>
@@ -25,6 +26,7 @@
 <img src="output\3rd_input.png"/>
 <br><br>
 <b>Output:</b>
+<br>
 <img src="output\3rd_output.png"/>
  
 
