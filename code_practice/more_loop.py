@@ -16,7 +16,10 @@ while x > 5:
  
 
 
-while x > 0:
-    pr
+# y = 1
+# while y == 0:
+#     print("i am Y")
+#     y = int(input("Enter '0' to exit the program"))
+    
 
 
